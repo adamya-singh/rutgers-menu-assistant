@@ -1,0 +1,22 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    width: 100;
+}
+
+.navbar {
+    background-color: #cc0033;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 1.5em;
+}

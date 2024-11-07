@@ -1,0 +1,4 @@
+express - for http requests
+cors - for cross site requests (so index.html can talk to index.js)
+selenium-webdriver - for dynamic web scraping
+//not installed: chromedriver - for selenium
