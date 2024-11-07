@@ -8,6 +8,7 @@ const {Builder, By, until} = require('selenium-webdriver');
     //Builder - used to initialize a new webdriver instance
     //By - used to locate elements on a webpage
     //until - used to tell selenium to wait for a trigger or time
+const chrome = require('selenium-webdriver/chrome');
 
 //defines what happens when a client requests this specific route (send a response of Hello World)
 app.get('/', (req, res) => {res.send('Hello World');});
@@ -15,8 +16,14 @@ app.get('/', (req, res) => {res.send('Hello World');});
 
 //define the route where clients can request the data
 app.get('/scrape', async (req, res) => {
+    //set chromedriver options
+    const options = new chrome.Options();
+    options.addArguments('headless');
+    options.addArguments('no-sandbox');
+    options.addArguments('disable-dev-shm-usage');
+
     //initialize a new selenium webdriver
-    let driver = await new Builder().forBrowser('chrome').build();
+    let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
 
     try {
         //navigate to website to scrape
