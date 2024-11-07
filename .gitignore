@@ -1,2 +1,6 @@
 backend/node_modules/
 .DS_Store
+backend/mongodb-macos-aarch64-8.0.3
+backend/mongodb-macos-aarch64-8.0.3/bin/MongoDB-data
+backend/mongodb-macos-aarch64-8.0.3/bin/mongos
+backend/mongodb-macos-aarch64-8.0.3/bin/mongod
