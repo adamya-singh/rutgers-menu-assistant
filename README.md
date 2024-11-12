@@ -4,8 +4,9 @@ setup:
     - run 'npm install' in the backend directory to install dependencies from package.json
 
 run:
+    - cd to 'backend' directory
     - run 'start-MongoDB.sh' to start MongoDB database
-    - cd to backend directory and run 'node index.sh'
+    - run 'node index.js'
 
 todo:
     -scrape data and store in mongodb database
