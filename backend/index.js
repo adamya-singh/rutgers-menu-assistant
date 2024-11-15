@@ -112,65 +112,130 @@ async function scrapeMenu() {
             await driver.quit();
     }
     
+    let dateP;
+    try {
+        dateP = await contentTextDiv.findElement(By.css('p'));
+        console.log("got <p> date p");
+
+    }   catch(error){
+            console.log("error getting <p> date p -- " + error);
+            await driver.quit();
+    }
+
+    let dateSelect;
+    try {
+        dateSelect = await dateP.findElement(By.css('select'));
+        console.log("got <select> date select");
+
+    }   catch(error){
+            console.log("error getting <select> date select -- " + error);
+            await driver.quit();
+    }
+
+    let allDateSelectOptions;
+    try {
+        //sets allDateSelectOptions to an array of WebElements
+        //allDateSelectOptions contains all dates in the menu date dropdown
+        allDateSelectOptions = await dateSelect.findElements(By.css('option'));
+        console.log("got all displayed date select options: ");
+        for(let option of allDateSelectOptions){
+            let optionText = await option.getText();
+            console.log(optionText);
+        }
+
+    }   catch(error){
+            console.log("error getting all date select options -- " + error);
+    }
+
+    let selectedDateElement;
+    let selectedDate;
+    try {
+        selectedDateElement = await dateSelect.findElement(By.css('option:checked'));
+        selectedDate = await selectedDateElement.getText();
+        console.log("got selected date -- " + selectedDate);
+
+    }   catch(error){
+            console.log("error getting selected date -- " + error);
+            await driver.quit();
+    }
+
+    let mealTabsDiv;
+    try {
+        mealTabsDiv = await contentTextDiv.findElement(By.className('tabs'));
+        console.log("got <div class='tabs>");
+
+    }   catch(error){
+            console.log("error getting <div class='tabs'> -- " + error);
+            await driver.quit();
+    }
+
+    //this will be used later to collect all menus
+    //allMealTabOptions contains elements with links to menus for different meals
+        //meals include {Breakfast, Lunch, Dinner, Knight Room (Busch)}
+    //activeMealTabOption is the name of the currently active meal tab (which meal is displayed, breakfast, lunch, etc.)
+    let allMealTabOptions;
+    let activeMealTabOption;
+    try {
+        allMealTabOptions = await mealTabsDiv.findElements(By.css('.tab'));
+        console.log("got all meal tab options:");
+        for (let tab of allMealTabOptions){
+            //for each tab in the meal tab options
+            let tabText = await tab.getText();
+            console.log("mealtab: " + tabText);
+
+            let isActive = await tab.getAttribute("class");
+            if(isActive.includes("active")) {
+                activeMealTabOption = await tab.getText();
+            }
+        }
+        console.log("got active meal tab option -- " + activeMealTabOption);
+
+    }   catch(error){
+            //error with getting all options or active option
+            console.log("error getting meal tab options -- " + error);
+            await driver.quit();
+    }
+
+    let recipeForm;
+    try {
+        recipeForm = await contentTextDiv.findElement(By.css('form[name="recipe"]'));
+        console.log("got <form name='recipe'>");
+
+    }   catch(error){
+            console.log("error getting <form name='recipe'> -- " + error);
+            await driver.quit();
+    }
     
+    let menuBoxDiv;
+    try {
+        menuBoxDiv = await recipeForm.findElement(By.className('menuBox'));
+        console.log("got <div class='menuBox'>");
 
-    /*
-    let containerMainContent = await driver.findElement(By.css('.container.main-content'))
-        .then((containerMainContent) => {
-            console.log("got <div class ='container main-content'>");
-        })
-        .catch((error) =>   {
-        console.error("error getting <div class ='container main-content'> -- " + error);
-        })
+    }   catch(error){
+            console.log("error getting <div class='menuBox'> -- " + error);
+            await driver.quit();
+    }
 
-    let row = await containerMainContent.findElement(By.className('row'))
-        .then((row) => {
-            console.log("got <div class ='row'>");
-        })
-        .catch((error) =>   {
-        console.error("error getting <div class ='row'> -- " + error);
-        })
-    */
+    let firstMenuCategory;
+    let firstMenuCategoryText;
+    try {
+        firstMenuCategory = await menuBoxDiv.findElement(By.css('h3'));
+        firstMenuCategoryText = await firstMenuCategory.getText();
+        console.log("got <h3> -- first menu category: " + firstMenuCategoryText);
+
+    }   catch(error){
+            console.log("error getting <div class='menuBox'> -- " + error);
+            await driver.quit();
+    }
     
-    //get title of the website and log to console
-    /*try {
-        //navigate to website to scrape
-        await driver.get('https://menuportal23.dining.rutgers.edu/foodpronet/pickmenu.aspx?sName=Rutgers+University+Dining&locationNum=04&locationName=Busch+Dining+Hall&naFlag=1');
-
-        //get title of the website
-        let title = await driver.getTitle();
-        console.log("Title: " + title);
-
-        let containerMainContent = driver.findElement(By.css('.container.main-content'))
-        .then((containerMainContent) => {
-            console.log("got <div class ='container main-content'>");
-        })
-        .catch((error) =>   {
-        console.error("error getting <div class ='container main-content'> -- " + error);
-        })
-
-    }   catch (error) {
-        console.error("error getting title -- " + error);
-    }   finally{
-        await driver.quit();
-    }*/
-
     //TODO: SCRAPE A MENU ITEM + NUTRITIONAL INFO
     
-
-    
-
-    //}   //finally {
-        //quit the webdriver
-        //await driver.quit();
-    //}
 
     finally{
         await driver.quit();
         console.log("quit webdriver");
         //process.exit();
     }
-    //await driver.quit();
 }
 
 //start server listening on port and log message to console

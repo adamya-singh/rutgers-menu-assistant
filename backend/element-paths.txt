@@ -1,6 +1,26 @@
 dining hall name:   DONE
-    div container main-content
-    div row
-    div col-md-9 pull-right
-    div content-text
-    h1
+    div class="container main-content"
+    div class="row"
+    div class="col-md-9 pull-right"
+    div id="content-text"
+    h1 -- "Menus - Busch Dining Hall"
+
+first menu category:    DONE
+    div id="content-text"
+    form name="recipe"
+    div class="menubox"
+    h3
+
+structure of div class="menuBox":
+    column 1: Item
+    column 2: Portion Size
+    column 3: Nutritional Info
+    column 4: Quantity
+
+structure of each menu category:
+    h3 (title of menu category)
+    <fieldset>  (one for each menu item)
+    <div class="col-1"> (item name)
+    <div class="col-2"> (serving portion/portion size)
+    <div class="col-3"> (nutritional info)
+    <div class="col-4"> (quantity input for nutritional info form)
