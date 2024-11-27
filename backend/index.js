@@ -228,8 +228,9 @@ async function scrapeMenu() {
             await driver.quit();
     }
     
-    //TODO: SCRAPE A MENU ITEM + NUTRITIONAL INFO
-    
+    //TODO: SCRAPE ALL MENU CATEGORIES IN A MENUBOX
+    //TODO: SCRAPE ALL MENU ITEMS IN A MENU CATEGORY
+    //TODO: SCRAPE A MENU ITEM'S NUTRITIONAL INFO
 
     finally{
         await driver.quit();

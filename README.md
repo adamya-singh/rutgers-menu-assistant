@@ -1,3 +1,6 @@
+This version of rutgers-menu-assistant was abandoned because I chose to change the structure of the project, now opting for a python fastapi backend instead of node.js backend. This version only locates and scrapes the menuBox before stopping.
+
+
 setup:
     - clone repository
 

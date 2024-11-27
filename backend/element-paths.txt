@@ -17,10 +17,13 @@ structure of div class="menuBox":
     column 3: Nutritional Info
     column 4: Quantity
 
-structure of each menu category:
-    h3 (title of menu category)
-    <fieldset>  (one for each menu item)
-    <div class="col-1"> (item name)
-    <div class="col-2"> (serving portion/portion size)
-    <div class="col-3"> (nutritional info)
-    <div class="col-4"> (quantity input for nutritional info form)
+structure of menuBox div:
+    h3 (title of each menu category)
+        <fieldset>  (one for each menu item)
+            <div class="col-1"> (item name)
+            <div class="col-2"> (serving portion/portion size)
+            <div class="col-3"> (nutritional info)
+            <div class="col-4"> (quantity input for nutritional info form)
+        </fieldset>
+        <fieldset> ...
+    h3 ...
