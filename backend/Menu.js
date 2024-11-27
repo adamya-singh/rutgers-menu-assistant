@@ -1,3 +1,4 @@
+//just keeping this file because I listed all the information to be scraped from each page, can still use this schema just have to convert to python
 const mongoose = require('mongoose');
 
 const menuSchema = new mongoose.Schema({
