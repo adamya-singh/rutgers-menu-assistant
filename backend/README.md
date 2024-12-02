@@ -4,3 +4,6 @@ next steps:
     - customize for my use case (rutgers-menu-assistant)
     - wrap functionality using fastapi
     - transition from streamlit ui to react.js ui
+
+notes:
+    - I still need to structure collection of each menu item myself, since the link to each respective nutritional info page for a menu item needs to be saved with the menu item it is part of
