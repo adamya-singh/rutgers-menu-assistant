@@ -1,4 +1,6 @@
 import selenium.webdriver as webdriver
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 
@@ -10,14 +12,23 @@ def scrape_website(website):
     options.add_argument("--headless")
     driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
 
+    driver.get(website)
+    print("Page loaded")
+    all_html = driver.page_source
+    
+    #successfully implemented line 62 of old (node.js) scraper
     try:
-        driver.get(website)
-        print("Page loaded")
-        html = driver.page_source
-        #add more functionality here
+        # Attempt to find the element
+        container_main_content_div = driver.find_element(By.CSS_SELECTOR, '.container.main-content')
+        print("got <div class='container main-content'>")
 
-        return html
+    except:
+        print(f"error getting <div class='container main-content'>")
+        driver.quit()
+    
+    #next: implement all the scraping after line 62 in the old scraper
     finally:
+        return all_html
         driver.quit()
 
 def extract_body_content(html_content):
@@ -67,7 +78,7 @@ def clean_body_content(body_content):
     return cleaned_content
 
 #this function splits dom content into batches
-#token limit for 3.2 1b is 128,000
+#token limit (context window) for 3.2 1b is 128,000
 def split_dom_content(dom_content, max_length=127000):
     return {
         dom_content[i : i + max_length] for i in range(0, len(dom_content), max_length)

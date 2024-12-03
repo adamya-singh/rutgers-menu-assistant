@@ -2,6 +2,8 @@ currently learning from techwithtim tutorial on web scraping with llms and imple
 
 next steps:
     - customize for my use case (rutgers-menu-assistant)
+        - in scrape.py, manually find the menuBox element
+        - then go through and make a list of all the <fieldset> elements inside menuBox
     - wrap functionality using fastapi
     - transition from streamlit ui to react.js ui
 

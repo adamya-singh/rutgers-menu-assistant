@@ -1,9 +1,10 @@
 import streamlit
 #import functions from scrape.py
 from scrape import scrape_website, split_dom_content, clean_body_content, extract_body_content
-
-streamlit.title("AI Web Scraper")
-url = streamlit.text_input("Website to scrape: ")
+#import functions from parse.py
+from parse import parse_with_ollama
+streamlit.title("Rutgers Menu Assistant")
+url = streamlit.text_input("Website to scrape: (busch dining hall by default)")
 
 if streamlit.button("Scrape Site"):
     streamlit.write("Scraping the website")
@@ -32,3 +33,6 @@ if "dom_content" in streamlit.session_state:
             streamlit.write("Parsing the content...")
 
             dom_chunks = split_dom_content(streamlit.session_state.dom_content)
+            result = parse_with_ollama(dom_chunks, parse_description)
+            streamlit.write(result)
+#42:41
