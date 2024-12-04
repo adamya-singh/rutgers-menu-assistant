@@ -16,7 +16,7 @@ def scrape_website(website):
     print("Page loaded")
     all_html = driver.page_source
     
-    #successfully implemented line 62 of old (node.js) scraper
+    #successfully implemented line 62-70 of old (node.js) scraper
     try:
         # Attempt to find the element
         container_main_content_div = driver.find_element(By.CSS_SELECTOR, '.container.main-content')
@@ -26,7 +26,7 @@ def scrape_website(website):
         print(f"error getting <div class='container main-content'>")
         driver.quit()
     
-    #next: implement all the scraping after line 62 in the old scraper
+    #next: implement all the scraping after line 70 in the old scraper
     finally:
         return all_html
         driver.quit()
