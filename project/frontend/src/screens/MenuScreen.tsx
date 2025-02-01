@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
 
-const MenuScreen = () => {
+export default function MenuScreen() {
   const [menu, setMenu] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,7 @@ const MenuScreen = () => {
       </View>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -49,5 +49,3 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-
-export default MenuScreen

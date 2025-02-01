@@ -7,7 +7,7 @@ type HomeScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
 };
 
-const HomeScreen = ({ navigation }: HomeScreenProps) => {
+export default function HomeScreen({ navigation }: HomeScreenProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>RU Menu Assistant</Text>
@@ -31,7 +31,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -61,5 +61,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-
-export default HomeScreen

@@ -7,7 +7,7 @@ type PreferencesScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Preferences'>;
 };
 
-const PreferencesScreen = ({ navigation }: PreferencesScreenProps) => {
+export default function PreferencesScreen({ navigation }: PreferencesScreenProps) {
   const [preferences, setPreferences] = useState({
     dietary: '',
     allergies: '',
@@ -54,7 +54,7 @@ const PreferencesScreen = ({ navigation }: PreferencesScreenProps) => {
       </View>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -95,5 +95,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-
-export default PreferencesScreen

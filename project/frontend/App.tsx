@@ -15,7 +15,7 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function App(): React.JSX.Element {
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -50,5 +50,3 @@ function App(): React.JSX.Element {
     </NavigationContainer>
   );
 }
-
-export default App;

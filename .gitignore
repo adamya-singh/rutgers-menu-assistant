@@ -1,6 +1,48 @@
-backend/node_modules/
-.DS_Store
-backend/mongodb-macos-aarch64-8.0.3
-backend/mongodb-macos-aarch64-8.0.3/bin/MongoDB-data
-backend/mongodb-macos-aarch64-8.0.3/bin/mongos
-backend/mongodb-macos-aarch64-8.0.3/bin/mongod
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Build artifacts
+dist/
+build/
+.bolt/
+
+# Metro bundler cache
+.expo/
+.expo-shared/
+
+# TypeScript
+*.tsbuildinfo
+
+# React Native
+android/
+ios/
+*.xcworkspace
+*.xcodeproj
+*.idea/
+*.gradle/
+*.DS_Store
+
+# Python virtual environment
+venv/
+.env
+*.pyc
+__pycache__/
+db.sqlite3
+
+# Logs
+logs/
+*.log
+*.out
+*.err
+nohup.out
+
+# VSCode settings
+.vscode/
+*.swp
+
+# Ignore local development files
+*.local
+*.env
+.env.*

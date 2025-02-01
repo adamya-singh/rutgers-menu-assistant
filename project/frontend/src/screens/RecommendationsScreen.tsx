@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
 
-const RecommendationsScreen = () => {
+export default function RecommendationsScreen() {
   const [recommendations, setRecommendations] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,7 +29,7 @@ const RecommendationsScreen = () => {
       </View>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -54,5 +54,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default RecommendationsScreen
