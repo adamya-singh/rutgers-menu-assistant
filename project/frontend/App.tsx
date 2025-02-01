@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import HomeScreen from './src/screens/HomeScreen';
 import MenuScreen from './src/screens/MenuScreen';
 import PreferencesScreen from './src/screens/PreferencesScreen';
@@ -11,6 +12,10 @@ export type RootStackParamList = {
   Menu: undefined;
   Preferences: undefined;
   Recommendations: undefined;
+  DiningHallMenu: {
+    diningHallId: string;
+    diningHallName: string;
+  };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -22,29 +27,33 @@ export default function App() {
         initialRouteName="Home"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#CC0033', // Rutgers Scarlet
+            backgroundColor: '#CC0033',
           },
-          headerTintColor: '#fff',
-        }}>
-        <Stack.Screen 
-          name="Home" 
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontWeight: '600',
+          },
+        }}
+      >
+        <Stack.Screen
+          name="Home"
           component={HomeScreen}
-          options={{ title: 'RU Menu Assistant' }}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="Menu" 
+        <Stack.Screen
+          name="Menu"
           component={MenuScreen}
-          options={{ title: "Today's Menu" }}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="Preferences" 
+        <Stack.Screen
+          name="Preferences"
           component={PreferencesScreen}
-          options={{ title: 'Your Preferences' }}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen 
-          name="Recommendations" 
+        <Stack.Screen
+          name="Recommendations"
           component={RecommendationsScreen}
-          options={{ title: 'Your Recommendations' }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

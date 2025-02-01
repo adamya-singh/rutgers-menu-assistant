@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  ActivityIndicator,
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../App';
 
-export default function RecommendationsScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, 'Recommendations'>;
+
+export default function RecommendationsScreen({ navigation }: Props) {
   const [recommendations, setRecommendations] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -11,10 +25,20 @@ export default function RecommendationsScreen() {
     setRecommendations(['Loading recommendations...']);
   }, []);
 
+  const handleGoBack = () => {
+    navigation.navigate('Home');
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Your Recommended Meals</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.headerBack} onPress={handleGoBack}>
+          <Ionicons name="chevron-back" size={28} color="#ffffff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Recommended Meals</Text>
+      </View>
+
+      <ScrollView style={styles.content}>
         {loading ? (
           <ActivityIndicator size="large" color="#CC0033" />
         ) : (
@@ -26,31 +50,47 @@ export default function RecommendationsScreen() {
             ))}
           </View>
         )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#000000',
   },
-  content: {
+  header: {
     padding: 20,
+    paddingTop: Platform.OS === 'ios' ? 80 : 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#CC0033',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  title: {
+  headerBack: {
+    marginRight: 16,
+  },
+  headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    color: '#ffffff',
+  },
+  content: {
+    flex: 1,
+    padding: 20,
   },
   recommendationCard: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 12,
     marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
   recommendationText: {
     fontSize: 16,
+    color: '#ffffff',
   },
 });

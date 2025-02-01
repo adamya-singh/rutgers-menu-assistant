@@ -1,97 +1,160 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Platform,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 
-type PreferencesScreenProps = {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Preferences'>;
-};
+type Props = NativeStackScreenProps<RootStackParamList, 'Preferences'>;
 
-export default function PreferencesScreen({ navigation }: PreferencesScreenProps) {
-  const [preferences, setPreferences] = useState({
-    dietary: '',
-    allergies: '',
-    favorites: '',
-  });
+export default function PreferencesScreen({ navigation }: Props) {
+  const [dietary, setDietary] = useState('');
+  const [allergies, setAllergies] = useState('');
+  const [favorites, setFavorites] = useState('');
 
-  const savePreferences = () => {
-    // TODO: Implement saving preferences
+  const handleSave = () => {
+    console.log('Saving preferences:', { dietary, allergies, favorites });
     navigation.goBack();
   };
 
+  const handleGoBack = () => {
+    navigation.navigate('Home');
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Your Preferences</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+      >
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.headerBack} onPress={handleGoBack}>
+            <Ionicons name="chevron-back" size={28} color="#ffffff" />
+          </TouchableOpacity>
+          <View style={styles.headerContent}>
+            <Text style={styles.headerTitle}>Your Preferences</Text>
+          </View>
+        </View>
 
-        <Text style={styles.label}>Dietary Restrictions:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="e.g., Vegetarian, Vegan, etc."
-          value={preferences.dietary}
-          onChangeText={(text) => setPreferences({ ...preferences, dietary: text })}
-        />
+        <ScrollView style={styles.content}>
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>Dietary Restrictions:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="e.g., Vegetarian, Vegan, etc."
+              placeholderTextColor="#666666"
+              value={dietary}
+              onChangeText={setDietary}
+            />
+          </View>
 
-        <Text style={styles.label}>Allergies:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="e.g., Nuts, Dairy, etc."
-          value={preferences.allergies}
-          onChangeText={(text) => setPreferences({ ...preferences, allergies: text })}
-        />
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>Allergies:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="e.g., Nuts, Dairy, etc."
+              placeholderTextColor="#666666"
+              value={allergies}
+              onChangeText={setAllergies}
+            />
+          </View>
 
-        <Text style={styles.label}>Favorite Foods:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="e.g., Pizza, Salad, etc."
-          value={preferences.favorites}
-          onChangeText={(text) => setPreferences({ ...preferences, favorites: text })}
-        />
+          <View style={styles.inputGroup}>
+            <Text style={styles.inputLabel}>Favorite Foods:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="e.g., Pizza, Salad, etc."
+              placeholderTextColor="#666666"
+              value={favorites}
+              onChangeText={setFavorites}
+            />
+          </View>
 
-        <TouchableOpacity style={styles.button} onPress={savePreferences}>
-          <Text style={styles.buttonText}>Save Preferences</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+          <TouchableOpacity onPress={handleSave}>
+            <LinearGradient
+              colors={['#CC0033', '#990026']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.saveButton}
+            >
+              <Text style={styles.saveButtonText}>Save Preferences</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#000000',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+  },
+  header: {
+    padding: 20,
+    paddingTop: Platform.OS === 'ios' ? 60 : 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#CC0033',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerBack: {
+    marginRight: 16,
+  },
+  headerContent: {
+    flex: 1,
+  },
+  headerTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#ffffff',
   },
   content: {
+    flex: 1,
     padding: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
+  inputGroup: {
+    marginBottom: 24,
   },
-  label: {
-    fontSize: 16,
+  inputLabel: {
+    fontSize: 18,
     fontWeight: '600',
+    color: '#ffffff',
     marginBottom: 8,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 12,
+    padding: 16,
     fontSize: 16,
+    color: '#ffffff',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
-  button: {
-    backgroundColor: '#CC0033',
-    padding: 15,
-    borderRadius: 8,
-    marginTop: 10,
+  saveButton: {
+    borderRadius: 12,
+    padding: 16,
+    alignItems: 'center',
+    marginTop: 20,
   },
-  buttonText: {
+  saveButtonText: {
     color: '#ffffff',
     fontSize: 18,
-    textAlign: 'center',
     fontWeight: '600',
   },
 });
