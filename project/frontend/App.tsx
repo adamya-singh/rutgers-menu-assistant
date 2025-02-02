@@ -6,12 +6,14 @@ import HomeScreen from './src/screens/HomeScreen';
 import MenuScreen from './src/screens/MenuScreen';
 import PreferencesScreen from './src/screens/PreferencesScreen';
 import RecommendationsScreen from './src/screens/RecommendationsScreen';
+import LearnScreen from 'screens/LearnScreen';
 
 export type RootStackParamList = {
   Home: undefined;
   Menu: undefined;
   Preferences: undefined;
   Recommendations: undefined;
+  Learn: undefined;
   DiningHallMenu: {
     diningHallId: string;
     diningHallName: string;
@@ -55,6 +57,12 @@ export default function App() {
           component={RecommendationsScreen}
           options={{ headerShown: false }}
         />
+          <Stack.Screen 
+          name="Learn" 
+          component={LearnScreen}
+          options={{ headerShown: false }}
+          />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

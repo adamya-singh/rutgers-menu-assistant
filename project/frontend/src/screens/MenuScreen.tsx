@@ -2,16 +2,33 @@ import React from 'react';
 import { 
   View, 
   Text, 
-  ScrollView, 
   StyleSheet, 
   TouchableOpacity,
   Platform,
   SafeAreaView,
+  Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
+import { SvgXml } from 'react-native-svg';
+
+const { width, height } = Dimensions.get('window');
+
+// Background gradient circles SVG
+const backgroundSvg = `
+<svg viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradientRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#CC0033;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#990026;stop-opacity:0.1"/>
+    </linearGradient>
+  </defs>
+  <circle cx="350" cy="150" r="200" fill="url(#gradientRed)" opacity="0.4"/>
+  <circle cx="50" cy="400" r="250" fill="url(#gradientRed)" opacity="0.3"/>
+  <circle cx="300" cy="700" r="180" fill="url(#gradientRed)" opacity="0.2"/>
+</svg>`;
 
 type DiningHall = {
   id: string;
@@ -29,48 +46,49 @@ export default function MenuScreen({ navigation }: Props) {
       id: 'busch',
       name: 'Busch',
       icon: 'restaurant-outline',
-      colors: ['#CC0033', '#800020'] as const,
+      colors: ['#CC0033', '#CC0033'] as const,
       description: 'Dining Commons',
     },
     {
       id: 'livingston',
       name: 'Livingston',
       icon: 'nutrition-outline',
-      colors: ['#990026', '#4D0013'] as const,
+      colors: ['#CC0033', '#CC0033'] as const,
       description: 'Dining Commons',
     },
     {
       id: 'neilson',
       name: 'Neilson',
       icon: 'cafe-outline',
-      colors: ['#800020', '#330000'] as const,
+      colors: ['#CC0033', '#CC0033'] as const,
       description: 'Dining Hall',
     },
     {
       id: 'atrium',
       name: 'The Atrium',
       icon: 'fast-food-outline',
-      colors: ['#660019', '#1A0000'] as const,
+      colors: ['#CC0033', '#CC0033'] as const,
       description: 'Food Court',
     },
   ];
 
-  const handleDiningHallPress = (diningHall: DiningHall) => {
-    console.log(`Selected ${diningHall.name}`);
-  };
-
   return (
     <SafeAreaView style={styles.safeArea}>
+      <View style={styles.backgroundContainer}>
+        <SvgXml xml={backgroundSvg} width="100%" height="100%" />
+      </View>
+
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity 
-            style={styles.headerBack}
+            style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Ionicons name="chevron-back" size={28} color="#ffffff" />
+            <Ionicons name="chevron-back" size={32} color="#FFFFFF" />
           </TouchableOpacity>
-          <View style={styles.headerContent}>
-            <Text style={styles.headerTitle}>What's On the Menu?</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>What's On the</Text>
+            <Text style={styles.title}>Menu?</Text>
           </View>
         </View>
         
@@ -79,27 +97,31 @@ export default function MenuScreen({ navigation }: Props) {
             <TouchableOpacity
               key={hall.id}
               style={styles.card}
-              onPress={() => handleDiningHallPress(hall)}
+              onPress={() => navigation.navigate('DiningHallMenu', { 
+                diningHallId: hall.id,
+                diningHallName: hall.name 
+              })}
             >
               <LinearGradient
                 colors={hall.colors}
                 start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0.8 }}
+                end={{ x: 1, y: 0 }}
                 style={styles.cardContent}
               >
-                <View style={styles.cardHeader}>
+                <View style={styles.cardLeft}>
                   <View style={styles.iconContainer}>
-                    <Ionicons name={hall.icon} size={28} color="#ffffff" />
+                    <Ionicons name={hall.icon} size={28} color="#FFFFFF" />
                   </View>
-                  <View style={styles.titleContainer}>
+                  <View style={styles.cardInfo}>
                     <Text style={styles.cardTitle}>{hall.name}</Text>
                     <Text style={styles.cardSubtitle}>{hall.description}</Text>
                   </View>
                 </View>
-                <View style={styles.cardAction}>
-                  <Text style={styles.viewText}>View Menu</Text>
-                  <Ionicons name="chevron-forward" size={20} color="#ffffff" />
-                </View>
+                
+                <TouchableOpacity style={styles.viewButton}>
+                  <Text style={styles.viewButtonText}>View Menu</Text>
+                  <Ionicons name="chevron-forward" size={20} color="#CC0033" />
+                </TouchableOpacity>
               </LinearGradient>
             </TouchableOpacity>
           ))}
@@ -112,61 +134,59 @@ export default function MenuScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#1A1A1A',
+  },
+  backgroundContainer: {
+    ...StyleSheet.absoluteFillObject,
   },
   container: {
     flex: 1,
-    backgroundColor: '#000000',
   },
   header: {
-    padding: 20,
-    paddingTop: Platform.OS === 'ios' ? 60 : 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#CC0033',
-    flexDirection: 'row',
-    alignItems: 'center',
+    padding: 24,
+    paddingTop: Platform.OS === 'ios' ? 20 : 24,
+    marginBottom: 20,
   },
-  headerBack: {
-    marginRight: 16,
+  backButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    marginBottom: 20,
   },
-  headerContent: {
-    flex: 1,
+  titleContainer: {
+    marginLeft: -4,
   },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#ffffff',
+  title: {
+    fontSize: 48,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: -1,
+    lineHeight: 54,
   },
   cardsContainer: {
     flex: 1,
-    padding: 16,
-    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    paddingTop: 20,
   },
   card: {
-    height: '22%',
-    marginVertical: 8,
-    borderRadius: 20,
+    borderRadius: 32,
     overflow: 'hidden',
-    elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    marginBottom: 16,
+    height: 100,
   },
   cardContent: {
-    flex: 1,
-    padding: 20,
+    paddingHorizontal: 28,
+    paddingVertical: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    height: '100%',
   },
-  cardHeader: {
+  cardLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
+    width: '65%',
+    gap: 16,
   },
   iconContainer: {
     width: 48,
@@ -175,33 +195,34 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
   },
-  titleContainer: {
+  cardInfo: {
     flex: 1,
   },
   cardTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 4,
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    marginBottom: 2,
   },
   cardSubtitle: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'rgba(255, 255, 255, 0.8)',
   },
-  cardAction: {
+  viewButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 24,
+    gap: 4,
+    width: 120,
+    justifyContent: 'center',
   },
-  viewText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '500',
-    marginRight: 4,
+  viewButtonText: {
+    color: '#CC0033',
+    fontSize: 15,
+    fontWeight: '600',
   },
 });
