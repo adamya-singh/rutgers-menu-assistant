@@ -7,12 +7,14 @@ import MenuScreen from './src/screens/MenuScreen';
 import PreferencesScreen from './src/screens/PreferencesScreen';
 import RecommendationsScreen from './src/screens/RecommendationsScreen';
 import LearnScreen from 'screens/LearnScreen';
+import AuthenticationScreen from 'screens/Authentication';
 
 export type RootStackParamList = {
   Home: undefined;
   Menu: undefined;
   Preferences: undefined;
   Recommendations: undefined;
+  Authentication: undefined;
   Learn: undefined;
   DiningHallMenu: {
     diningHallId: string;
@@ -62,6 +64,12 @@ export default function App() {
           component={LearnScreen}
           options={{ headerShown: false }}
           />
+          <Stack.Screen 
+          name="Authentication" 
+          component={AuthenticationScreen}
+          options={{ headerShown: false }}
+          />
+
 
       </Stack.Navigator>
     </NavigationContainer>

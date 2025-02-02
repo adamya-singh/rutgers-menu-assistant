@@ -12,13 +12,11 @@ import {
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
 import { SvgXml } from 'react-native-svg';
+import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-// Background gradient circles SVG
 const backgroundSvg = `
 <svg viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -46,6 +44,10 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     secondaryText: isDarkMode ? '#CCCCCC' : '#666666',
   };
 
+  const handleDashboardPress = () => {
+    navigation.navigate('Authentication');
+  };
+
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.backgroundColor }]}>
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
@@ -57,7 +59,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       <View style={styles.contentContainer}>
         <View style={styles.header}>
           <Text style={[styles.headerTitle, { color: theme.textColor }]}>RU Dining</Text>
-          <TouchableOpacity style={[styles.dashboardButton, { backgroundColor: isDarkMode ? 'rgba(204, 0, 51, 0.1)' : 'rgba(204, 0, 51, 0.1)' }]}>
+           
+          <TouchableOpacity 
+            style={[styles.dashboardButton, { backgroundColor: isDarkMode ? 'rgba(204, 0, 51, 0.1)' : 'rgba(204, 0, 51, 0.1)' }]}
+            onPress={handleDashboardPress}
+          >
             <Text style={styles.dashboardText}>Dashboard</Text>
           </TouchableOpacity>
         </View>

@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Platform,
+  Linking,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -32,6 +33,7 @@ const DiningHallInfo = [
   {
     name: 'Busch Dining Commons',
     location: 'Busch Campus',
+    mapLink: 'https://maps.app.goo.gl/FC6eCZQAnhejVkFDA',
     hours: {
       weekday: '7:00am – 9:00pm',
       weekend: '9:30am – 8:00pm',
@@ -45,6 +47,7 @@ const DiningHallInfo = [
   {
     name: 'Livingston Dining Commons',
     location: 'Behind Livingston Student Center',
+    mapLink: 'https://maps.app.goo.gl/4Ws1B6DhSs16r8iz5',
     hours: {
       weekday: '7:00am – 9:00pm',
       weekend: '9:30am – 8:00pm'
@@ -53,6 +56,7 @@ const DiningHallInfo = [
   {
     name: 'The Atrium',
     location: 'College Avenue Student Center',
+    mapLink: 'https://maps.app.goo.gl/ShrX88v1c7Y5EhrT6',
     hours: {
       mondayToThursday: '7:00am – 11:00pm',
       friday: '7:00am – 9:00pm',
@@ -62,6 +66,7 @@ const DiningHallInfo = [
   {
     name: 'Neilson Dining Hall',
     location: 'Near Katzenbach Bus Stop',
+    mapLink: 'https://maps.app.goo.gl/3B5Ze7tdcZwKnpVP7',
     hours: {
       weekday: '7:00am – 9:00pm',
       weekend: '9:30am – 8:00pm',
@@ -73,6 +78,10 @@ const DiningHallInfo = [
 ];
 
 export default function LearnScreen({ navigation }: Props) {
+  const handleMapPress = (mapLink: string) => {
+    Linking.openURL(mapLink);
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.backgroundContainer}>
@@ -98,7 +107,11 @@ export default function LearnScreen({ navigation }: Props) {
             <View key={index} style={styles.card}>
               <View style={styles.cardHeader}>
                 <Text style={styles.hallName}>{hall.name}</Text>
-                <Text style={styles.location}>{hall.location}</Text>
+                <TouchableOpacity 
+                  onPress={() => handleMapPress(hall.mapLink)}
+                >
+                  <Text style={styles.locationLink}>{hall.location}</Text>
+                </TouchableOpacity>
               </View>
 
               <View style={styles.hoursContainer}>
@@ -215,9 +228,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginBottom: 4,
   },
-  location: {
+  locationLink: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: '#00BFFF', // Bright blue to indicate it's a link
+    textDecorationLine: 'underline', // Underline to suggest it's clickable
   },
   hoursContainer: {
     gap: 12,
